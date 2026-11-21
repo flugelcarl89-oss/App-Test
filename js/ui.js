@@ -80,8 +80,8 @@ const nf1 = new Intl.NumberFormat('de-DE', { maximumFractionDigits: 1 });
 
 export const fmtInt = (n) => (n == null || n === '' || isNaN(n) ? '–' : nf0.format(n));
 export const fmtDec = (n) => (n == null || n === '' || isNaN(n) ? '–' : nf1.format(n));
-export const fmtEuro = (n) => (n == null || n === '' || isNaN(n) ? '–' : nf0.format(Math.round(n)) + ' €');
-export const fmtKm = (n) => (n == null || n === '' || isNaN(n) ? '–' : nf0.format(n) + ' km');
+export const fmtEuro = (n) => (n == null || n === '' || isNaN(n) ? '–' : nf0.format(Math.round(n)) + '\u00a0€');
+export const fmtKm = (n) => (n == null || n === '' || isNaN(n) ? '–' : nf0.format(n) + '\u00a0km');
 
 // Ganzzahl (Punkte = Tausendertrenner)
 export function parseInt2(v) {

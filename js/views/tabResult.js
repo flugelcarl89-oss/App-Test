@@ -15,7 +15,7 @@ export function renderResult(ctx) {
     h('div', { class: 'grade-info' },
       h('div', { class: 'grade-text' }, ev.gradeText),
       h('div', { class: 'score-bar' }, h('div', { class: 'score-fill', style: { width: ev.score + '%' } })),
-      h('div', { class: 'muted small' }, `${ev.score} von 100 Punkten · Erfassung ${ev.completeness} %`)));
+      h('div', { class: 'muted small' }, `${ev.score}\u00a0von\u00a0100\u00a0Punkten · Erfassung\u00a0${ev.completeness}\u00a0%`)));
 
   const flags = ev.flags.length
     ? h('div', { class: 'card' }, ev.flags.map((f) => h('div', { class: 'flag f-' + f.level },
