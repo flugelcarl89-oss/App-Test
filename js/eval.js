@@ -1,6 +1,6 @@
 // Bewertungslogik: Lack-Ampel, Schäden, Reifen, Checkliste, Gesamtnote, Ankaufsrechner
 import { CHECK_GROUPS, WHEELS, WMI, PHOTO_SLOTS, damageLabel } from './data.js';
-import { buildLayout } from './sketch.js';
+import { buildLayout, walkOrder } from './sketch.js';
 import { parseInt2, parseDec, fmtInt, fmtDec, fmtEuro } from './ui.js';
 
 const RANK = { none: 0, ok: 1, warn: 2, bad: 3 };
@@ -175,7 +175,7 @@ export const psFromKw = (kw) => (kw ? Math.round(kw * 1.35962) : null);
 // ---------- Kosten ----------
 export function damageList(a, layout) {
   const list = [];
-  for (const p of layout.parts) {
+  for (const p of walkOrder(layout)) {
     const d = a.parts[p.id]?.damages || [];
     for (const x of d) list.push({ part: p, ...x, cost: parseInt2(x.cost) || 0, typeLabel: damageLabel(p.kind, x.type) });
   }

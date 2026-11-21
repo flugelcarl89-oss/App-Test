@@ -30,7 +30,7 @@ export function renderBody(ctx) {
 
   const renderFindings = () => {
     const rows = [];
-    for (const p of layout.parts) {
+    for (const p of walkOrder(layout)) {
       const d = a.parts[p.id];
       if (!d) continue;
       const mx = paintMax(d);

@@ -19,12 +19,27 @@ export function renderTires(ctx) {
       h('label', { class: 'field' }, h('span', { class: 'field-label' }, 'Eigener Betrag (optional)'), h('span', { class: 'field-control' }, override, h('span', { class: 'unit' }, '€'))));
   };
 
+  // Kleines Auto von oben: Räder färben sich nach Zustand
+  const carBox = h('div', { class: 'wheels-car', html: `<svg viewBox="0 0 64 156" aria-hidden="true">
+    <text x="32" y="7" text-anchor="middle" class="wc-text">VORNE</text>
+    <rect class="wc-wheel" data-w="fl" x="3" y="28" width="12" height="27" rx="4"/>
+    <rect class="wc-wheel" data-w="fr" x="49" y="28" width="12" height="27" rx="4"/>
+    <rect class="wc-wheel" data-w="rl" x="3" y="108" width="12" height="27" rx="4"/>
+    <rect class="wc-wheel" data-w="rr" x="49" y="108" width="12" height="27" rx="4"/>
+    <path class="wc-body" d="M15,24Q15,11 32,10Q49,11 49,24L51,62L51,136Q51,151 32,152Q13,151 13,136L13,62Z"/>
+    <path class="wc-glass" d="M17,52Q32,45 47,52L44.5,66Q32,63 19.5,66Z"/>
+    <rect class="wc-roof" x="19.5" y="68" width="25" height="44" rx="5"/>
+    <path class="wc-glass" d="M19.5,114Q32,117 44.5,114L46.5,126Q32,130 17.5,126Z"/>
+  </svg>` });
+
   const wheelCard = (w) => {
     const t = T.wheels[w.id] || (T.wheels[w.id] = {});
     const card = h('div', { class: 'wheel-card' });
     const ageEl = h('div', { class: 'wheel-age' });
     const setStatus = () => {
-      card.className = `wheel-card w-${w.id} s-${tireStatus(t, s)}`;
+      const stt = tireStatus(t, s);
+      card.className = `wheel-card w-${w.id} s-${stt}`;
+      carBox.querySelector(`[data-w="${w.id}"]`)?.setAttribute('class', 'wc-wheel s-' + stt);
       const ag = dotAge(t.dot);
       ageEl.textContent = ag ? `KW ${ag.week}/${ag.year} · ${fmtDec(ag.age)} J.` : 'DOT: Woche + Jahr, z. B. 2321';
     };
@@ -73,7 +88,7 @@ export function renderTires(ctx) {
       h('h3', { class: 'group-title' }, 'Profiltiefe & DOT'),
       h('button', { type: 'button', class: 'btn-text', onclick: copyAll }, 'VL auf alle übertragen')),
     h('div', { class: 'wheels-grid' },
-      h('div', { class: 'wheels-car' }, h('span', null, 'vorne')),
+      carBox,
       ...WHEELS.map(wheelCard)),
     h('div', { class: 'legend' },
       h('span', null, h('i', { class: 'dot s-ok' }), `≥ ${fmtDec(s.tireMinDepth)} mm`),

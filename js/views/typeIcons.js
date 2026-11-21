@@ -26,9 +26,10 @@ const SHAPES = {
     lines: 'M64,26V37', wheels: [26, 97],
   },
   cabrio: {
-    body: 'M10,41V30Q10,27 14,27L66,26.5L74,18L77,18.5L71,26.5L90,27L108,29Q113,30 113,35V41Z',
-    win: 'M40,26.5V21.5Q40,19.5 42,19.5L45,19.5Q47,19.5 47,21.5V26.5ZM54,26.5V21.5Q54,19.5 56,19.5L59,19.5Q61,19.5 61,21.5V26.5Z',
-    lines: 'M64,27V37', wheels: [26, 97],
+    body: 'M10,41V33Q10,28.5 16,28L77,27L92,27.5L108,29.5Q113,30.5 113,35V41Z',
+    win: 'M74.5,27.4L65.5,16.6L68,16.2L78,27.4Z',
+    extra: 'M49,27.2L50.5,20.5Q51,18.8 53,18.9L55,19.1Q56.8,19.4 56.4,21.2L55.2,27.2ZM33,27.4L34.3,21.8Q34.8,20.2 36.6,20.3L38.4,20.5Q40,20.8 39.7,22.4L38.8,27.4ZM13.5,28.3Q14.5,23.6 20.5,23.6L26.5,23.6Q29.5,23.6 29.5,27.8Z',
+    lines: 'M64,28V37', wheels: [26, 97],
   },
   van: {
     body: 'M10,41V14Q10,7 18,7L80,7Q86,7 89,12L96,22L107,25Q112,26 112,31V41Z',
@@ -57,6 +58,7 @@ export function typeIcon(id) {
     <path class="ti-body" d="${s.body}" />
     <path class="ti-win" d="${s.win}" />
     <path class="ti-line" d="${s.lines}" />
+    ${s.extra ? `<path class="ti-dark" d="${s.extra}" />` : ''}
     ${s.wheels.map((x) => `<circle class="ti-wheel" cx="${x}" cy="41" r="${r}"/><circle class="ti-hub" cx="${x}" cy="41" r="${r * 0.38}"/>`).join('')}
   </svg>`;
   return span;

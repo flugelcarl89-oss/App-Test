@@ -2,7 +2,7 @@
 import { busy, toast, offerShare, fmtEuro, fmtInt, fmtDec, fmtDate, fmtMonth, parseInt2, parseDec } from './ui.js';
 import { state, photoRefs } from './store.js';
 import { evaluate, calcPrice, paintMax, paintLevel, PAINT_TEXT, partInfoFn, tireStatus, dotAge, ageYears, kmPerYear, psFromKw, checkGroups, titleOf, vinInfo } from './eval.js';
-import { sketchSVG, sketchPNG } from './sketch.js';
+import { sketchSVG, sketchPNG, walkOrder } from './sketch.js';
 import { typeById, FUELS, GEARBOXES, SEASONS, WHEELS, PHOTO_SLOTS } from './data.js';
 import { getPhoto } from './photos.js';
 
@@ -185,40 +185,28 @@ async function build(jsPDF, a, b) {
   b.set('Skizze …');
   const svg = sketchSVG(a, ev.layout, partInfoFn(a, s, 'all'), { wheelInfo: (id) => ({ status: tireStatus(a.tires.wheels[id], s) }), pdf: true });
   const png = await sketchPNG(svg, 3);
-  const skW = 62, skH = skW * png.h / png.w;
+  const skW = 118, skH = skW * png.h / png.w;
   need(skH + 30);
   heading('Karosserie & Lack');
-  const skTop = y;
-  doc.addImage(png.dataUrl, 'PNG', M, y, skW, skH);
+  doc.addImage(png.dataUrl, 'PNG', M + (CW - skW) / 2, y, skW, skH);
+  y += skH + 3;
   // Legende
-  let ly = y + skH + 4;
-  font(7, 'normal', COL.muted);
-  [['ok', `Original <= ${s.paintOkMax} µm`], ['warn', `Nachlackiert <= ${s.paintWarnMax} µm / Schaden`], ['bad', 'Spachtel / starker Schaden']].forEach(([st, l], i) => {
-    dot(M + 1.5, ly + i * 4 - 1, st, 1.2); text(l, M + 4, ly + i * 4);
-  });
-  // Messwerte rechts neben der Skizze
-  const tx = M + skW + 6, tw = CW - skW - 6;
-  let ty = skTop;
-  font(8, 'bold', COL.muted);
-  text('Teil', tx + 3, ty + 3); text('Messwerte (µm)', tx + 44, ty + 3); text('Bewertung', tx + tw, ty + 3, { align: 'right' });
-  ty += 5;
-  doc.setDrawColor(...COL.line); doc.setLineWidth(0.15);
-  const rowsAll = ev.layout.parts.filter((p) => p.kind === 'paint');
-  for (const p of rowsAll) {
-    const d = a.parts[p.id];
-    const mx = paintMax(d);
-    const lvl = paintLevel(mx, s);
-    const st = lvl || (d?.ok ? 'ok' : 'none');
-    if (ty > PH - 20) break;
-    dot(tx + 1, ty + 2.2, st, 1.1);
-    font(8, 'normal', COL.text); text(p.label, tx + 3, ty + 3);
-    font(8, 'normal', COL.text); text(d?.paint?.length ? d.paint.join(' / ') : (d?.ok ? 'i.O. (ohne Messung)' : '–'), tx + 44, ty + 3);
-    font(8, lvl ? 'bold' : 'normal', lvl ? COL[lvl] : COL.muted);
-    text(lvl ? PAINT_TEXT[lvl] : (d?.material === 'kunststoff' ? 'Kunststoff' : ''), tx + tw, ty + 3, { align: 'right' });
-    ty += 4.6;
-    doc.line(tx, ty - 0.6, tx + tw, ty - 0.6);
-  }
-  y = Math.max(ly + 12, ty + 4);
+  font(7.5, 'normal', COL.muted);
+  const leg = [['ok', `Original <= ${s.paintOkMax} µm`], ['warn', `Nachlackiert <= ${s.paintWarnMax} µm / Schaden`], ['bad', 'Spachtel / starker Schaden']];
+  let lx = M + (CW - 150) / 2;
+  leg.forEach(([st, l]) => { dot(lx + 1.5, y + 1.6, st, 1.2); text(l, lx + 4, y + 2.6); lx += 50; });
+  y += 9;
+  // Messwerte aller lackierten Teile
+  const rowsAll = walkOrder(ev.layout).filter((p) => p.kind === 'paint');
+  table(
+    [{ w: 62 }, { w: 60 }, { w: 60, align: 'right' }],
+    ['Teil', 'Messwerte (µm)', 'Bewertung'],
+    rowsAll.map((p) => {
+      const d = a.parts[p.id];
+      const lvl = paintLevel(paintMax(d), s);
+      return [p.label, d?.paint?.length ? d.paint.join(' / ') : (d?.ok ? 'i.O. (ohne Messung)' : '–'), lvl ? PAINT_TEXT[lvl] : (d?.material === 'kunststoff' || p.material === 'kunststoff' ? 'Kunststoff' : '')];
+    }),
+    { fs: 8, rowStatus: rowsAll.map((p) => { const d = a.parts[p.id]; return paintLevel(paintMax(d), s) || (d?.ok ? 'ok' : 'none'); }) });
 
   // Schäden
   if (ev.damages.length) {

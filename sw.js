@@ -1,5 +1,5 @@
 // Service Worker: App offline verfügbar machen
-const VERSION = '1.0.0';
+const VERSION = '1.1.0';
 const SHELL = `shell-${VERSION}`;
 const RUNTIME = 'runtime-v1';
 const ASSETS = [

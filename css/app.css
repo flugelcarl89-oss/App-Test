@@ -252,6 +252,7 @@ select.inp { width: auto; padding-right: 28px; background-image: linear-gradient
 .ti-line { fill: none; stroke: var(--ti-stroke); stroke-width: 0.8; opacity: 0.55; }
 .ti-wheel { fill: #2b2f36; stroke: var(--card); stroke-width: 2; }
 .ti-hub { fill: #a3acb8; }
+.ti-dark { fill: var(--ti-stroke); }
 .ti-shadow { stroke: var(--line); stroke-width: 2; stroke-linecap: round; }
 .type-scroller { display: flex; gap: 6px; overflow-x: auto; padding: 10px; scrollbar-width: none; border-bottom: 0.5px solid var(--line); }
 .type-scroller::-webkit-scrollbar { display: none; }
@@ -272,7 +273,7 @@ select.inp { width: auto; padding-right: 28px; background-image: linear-gradient
 .body-toolbar .seg { width: 100%; max-width: 360px; }
 .sketch-card { padding: 8px 6px 4px; }
 .sketch { display: block; }
-.sketch svg { display: block; width: 100%; max-width: 400px; height: auto; margin: 0 auto; user-select: none; -webkit-user-select: none; }
+.sketch svg { display: block; width: 100%; max-width: 460px; height: auto; margin: 0 auto; user-select: none; -webkit-user-select: none; }
 .sketch.mini svg { max-height: 30vh; width: auto; max-width: 100%; }
 .sk-part, .sk-wheel { cursor: pointer; }
 .sk-part .sk-shape { transition: fill 0.2s, stroke 0.2s; }
@@ -291,9 +292,15 @@ select.inp { width: auto; padding-right: 28px; background-image: linear-gradient
   :root:not([data-theme="light"]) .sk-part.s-bad .sk-shape { fill: #4f1c1c; stroke: #ff5a52; }
   :root:not([data-theme="light"]) .sk-part.k-glass.s-none .sk-shape { fill: #1b2a3d; stroke: #3d5f85; }
   :root:not([data-theme="light"]) .sk-part.k-softtop.s-none .sk-shape { fill: #29253a; stroke: #5d5580; }
-  :root:not([data-theme="light"]) .sk-part text { fill: #e8e8ee; }
+  :root:not([data-theme="light"]) .sk-label, :root:not([data-theme="light"]) .sk-value { fill: #e8e8ee; }
   :root:not([data-theme="light"]) .sk-part.hl .sk-shape { stroke: #3d8bff; }
-  :root:not([data-theme="light"]) .sk-wheel-body { fill: #0d0f12; stroke: #5a616b; }
+  :root:not([data-theme="light"]) .sk-deco-body { fill: #34383f; stroke: #4c525c; }
+  :root:not([data-theme="light"]) .sk-deco-body.soft { fill: #26232f; stroke: #3d3850; }
+  :root:not([data-theme="light"]) .sk-deco-glass { fill: #1d2d40; stroke: #3d5f85; }
+  :root:not([data-theme="light"]) .sk-deco-dark { fill: #5d6570; }
+  :root:not([data-theme="light"]) .sk-title { fill: #8a93a1; }
+  :root:not([data-theme="light"]) .sk-rim { fill: #8d95a1; stroke: #5d6570; }
+  :root:not([data-theme="light"]) .sk-tire { fill: #0d0f12; }
 }
 
 .findings .finding { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; background: none; border: none; border-bottom: 0.5px solid var(--line); padding: 12px 12px 12px 14px; }
@@ -424,9 +431,17 @@ select.inp { width: auto; padding-right: 28px; background-image: linear-gradient
 /* ---------- Reifen ---------- */
 .tires-head { display: flex; align-items: center; justify-content: space-between; }
 .tires-head .group-title { margin: 6px 6px 8px; }
-.wheels-grid { display: grid; grid-template-columns: 1fr 44px 1fr; grid-template-areas: "fl car fr" "rl car rr"; gap: 10px; }
-.wheels-car { grid-area: car; border-radius: 22px 22px 14px 14px; background: var(--card2); display: flex; justify-content: center; padding-top: 8px; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
-.wheels-car span { writing-mode: vertical-rl; }
+.wheels-grid { display: grid; grid-template-columns: 1fr 58px 1fr; grid-template-areas: "fl car fr" "rl car rr"; gap: 8px; }
+.wheels-car { grid-area: car; display: flex; align-items: center; justify-content: center; }
+.wheels-car svg { width: 58px; height: auto; display: block; }
+.wc-body { fill: var(--ti-body); stroke: var(--ti-stroke); stroke-width: 1.2; }
+.wc-roof { fill: var(--ti-body); stroke: var(--ti-stroke); stroke-width: 1; }
+.wc-glass { fill: var(--ti-win); stroke: var(--ti-stroke); stroke-width: 0.8; }
+.wc-wheel { fill: #2b2f36; }
+.wc-wheel.s-ok { fill: var(--ok); }
+.wc-wheel.s-warn { fill: var(--warn); }
+.wc-wheel.s-bad { fill: var(--bad); }
+.wc-text { font-size: 7px; font-weight: 700; letter-spacing: 1px; fill: var(--accent); }
 .w-fl { grid-area: fl; } .w-fr { grid-area: fr; } .w-rl { grid-area: rl; } .w-rr { grid-area: rr; }
 .wheel-card { background: var(--card); border-radius: 14px; padding: 10px; border: 2px solid transparent; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .wheel-card.s-ok { border-color: var(--ok); }
