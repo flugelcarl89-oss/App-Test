@@ -48,6 +48,7 @@ export function createAssessment(typeId) {
       marginMode: s.marginMode, marginEur: String(s.marginEur), marginPct: String(s.marginPct),
       ask: '', agreed: '',
     },
+    market: { model: '', yFrom: '', yTo: '', kmFrom: '', kmTo: '', kwFrom: '', kwTo: '', useFuel: true, useGear: true, usePower: false, prices: [] },
     notes: '',
     signature: null,
   };

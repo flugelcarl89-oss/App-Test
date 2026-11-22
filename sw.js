@@ -1,11 +1,11 @@
 // Service Worker: App offline verfügbar machen
-const VERSION = '1.1.0';
+const VERSION = '1.2.0';
 const SHELL = `shell-${VERSION}`;
 const RUNTIME = 'runtime-v1';
 const ASSETS = [
   './', 'index.html', 'manifest.webmanifest', 'css/app.css',
   'js/app.js', 'js/nav.js', 'js/ui.js', 'js/db.js', 'js/data.js', 'js/store.js', 'js/sketch.js', 'js/eval.js',
-  'js/photos.js', 'js/ocr.js', 'js/pdf.js',
+  'js/photos.js', 'js/ocr.js', 'js/pdf.js', 'js/market.js',
   'js/views/home.js', 'js/views/new.js', 'js/views/assessment.js', 'js/views/typeIcons.js', 'js/views/settings.js',
   'js/views/tabVehicle.js', 'js/views/tabBody.js', 'js/views/tabTires.js', 'js/views/tabChecklist.js',
   'js/views/tabPhotos.js', 'js/views/tabResult.js',

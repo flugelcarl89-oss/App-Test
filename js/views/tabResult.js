@@ -1,6 +1,7 @@
 // Tab „Ergebnis“: Note, Hinweise, Ankaufsrechner, Status, Unterschrift, PDF
 import { h, icon, input, segmented, section, fmtEuro, openSheet, confirmDialog } from '../ui.js';
 import { evaluate, calcPrice } from '../eval.js';
+import { marketCard } from '../market.js';
 
 const STATUS = [{ value: 'offen', label: 'Offen' }, { value: 'angekauft', label: 'Angekauft' }, { value: 'abgelehnt', label: 'Abgelehnt' }];
 
@@ -113,6 +114,14 @@ export function renderResult(ctx) {
     gradeCard,
     h('h3', { class: 'group-title' }, 'Hinweise'), flags,
     stats,
+    h('h3', { class: 'group-title' }, 'Marktvergleich'),
+    marketCard(ctx, (median) => {
+      C.vk = String(median);
+      const vkInp = calc.querySelector('.calc-row.big input');
+      if (vkInp) vkInp.value = C.vk;
+      ctx.save(); upd();
+      calc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }),
     h('h3', { class: 'group-title' }, 'Ankaufsrechner'), calc,
     section('Status', segmented(STATUS, a.status, (v) => { a.status = v; ctx.save(); })),
     section('Unterschrift (optional)', sigBox),

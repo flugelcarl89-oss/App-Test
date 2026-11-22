@@ -5,6 +5,7 @@ import { evaluate, calcPrice, paintMax, paintLevel, PAINT_TEXT, partInfoFn, tire
 import { sketchSVG, sketchPNG, walkOrder } from './sketch.js';
 import { typeById, FUELS, GEARBOXES, SEASONS, WHEELS, PHOTO_SLOTS } from './data.js';
 import { getPhoto } from './photos.js';
+import { priceStats } from './market.js';
 
 function loadJsPDF() {
   if (window.jspdf) return Promise.resolve(window.jspdf.jsPDF);
@@ -285,6 +286,7 @@ async function build(jsPDF, a, b) {
     ['Kosten gesamt', fmtEuro(price.total)],
     price.vk != null ? ['Eingeplanter Gewinn', fmtEuro(price.margin)] : null,
     price.vk != null && s.vat25a ? ['USt auf Marge (§ 25a)', fmtEuro(price.vat)] : null,
+    priceStats(a.market?.prices) ? (() => { const m = priceStats(a.market.prices); return [`Marktvergleich: ${m.n} Angebote (${fmtEuro(m.min)} – ${fmtEuro(m.max)}), Median`, fmtEuro(m.median)]; })() : null,
   ].filter(Boolean);
   table([{ w: 120 }, { w: 62, align: 'right' }], ['Position', 'Betrag'], calcRows.map((r) => r), { zebra: true });
   if (price.maxPrice != null) {

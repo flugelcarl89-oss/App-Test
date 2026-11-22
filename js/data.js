@@ -1,6 +1,6 @@
 // Stammdaten: Fahrzeugtypen, Teile, Schadenarten, Checkliste, Foto-Positionen, Voreinstellungen
 
-export const APP_VERSION = '1.1.0';
+export const APP_VERSION = '1.2.0';
 
 // prop: Längen (Skizzen-Einheiten) für Motorhaube, Dach, Heck, Ladefläche
 export const VEHICLE_TYPES = [

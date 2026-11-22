@@ -553,6 +553,25 @@ select.inp { width: auto; padding-right: 28px; background-image: linear-gradient
 .group > .card > .btn.block, .sig-box > .btn.block { margin: 0; border: none; border-radius: 0; box-shadow: none; }
 .cost-box .hint { padding: 0 14px; }
 
+/* ---------- Marktvergleich ---------- */
+.mk { padding: 12px 14px 6px; }
+.mk-head { display: flex; align-items: center; gap: 8px; font-weight: 650; font-size: 16px; color: var(--accent); }
+.mk-summary { font-size: 14px; color: var(--text); margin-top: 6px; line-height: 1.4; }
+.mk .btn-row { margin: 10px 0 2px; }
+a.btn { text-decoration: none; }
+a.btn.disabled { opacity: 0.4; pointer-events: none; }
+.mk-adjust { border-top: 0.5px solid var(--line); margin: 8px -14px 0; }
+.mk-adjust summary { padding: 11px 14px; color: var(--accent); font-size: 15px; cursor: pointer; }
+.mk-adjust .toggle { padding-left: 14px; }
+.mk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 0 14px 8px; }
+.mk-field { display: flex; flex-direction: column; gap: 3px; font-size: 12.5px; color: var(--muted); }
+.mk-field.wide { grid-column: 1 / -1; }
+.inp.mk-inp { padding: 8px 10px; font-size: 16px; }
+.mk-prices { border-top: 0.5px solid var(--line); margin: 0 -14px; padding: 10px 14px 6px; }
+.mk-prices .block-title { margin-top: 2px; }
+.mk-stats { margin: 4px 0 6px; font-size: 14px; }
+.mk-stats-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+
 /* ---------- Texterkennung ---------- */
 .crop { display: flex; flex-direction: column; }
 .crop-stage { position: relative; margin: 10px auto; touch-action: none; overflow: hidden; border-radius: 10px; line-height: 0; }
